@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 09:39:20 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/05 12:51:11 by lsohler          ###   ########.fr       */
+/*   Created: 2023/07/05 11:14:31 by lsohler           #+#    #+#             */
+/*   Updated: 2023/07/05 12:41:14 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	routine(t_philo *philo)
-{
-	return (0);
-}
-
-int	simulation(t_philo *philo)
+int	check_arguments(int ac, char **av)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->meta->philo_n)
+	if (ac != 5 || ac != 6)
+		return (-1);
+	while (av++)
 	{
-		pthread_create(&philo->tid, NULL, &routine, &philo);
-		philo = philo->right;
-		i++;
+		while (&av[i])
+		{
+			if (&av[i] < '0' || &av[i] > '9')
+				return (-1);
+			i++;
+		}
+		i = 0;
 	}
-}
-
-int	main(int ac, char **av)
-{
-	t_meta	*meta;
-	t_philo	*philo;
-
-	if (!check_arguments(ac, av))
-	{
-		meta = init_meta(ac, av);
-		philo = init_philo(meta);
-		simulation(philo);
-	}
+	return (0);
 }

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/04 14:29:08 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/07/05 12:55:34 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_meta	*init_meta(int ac, char *av)
+t_meta	*init_meta(int ac, char **av)
 {
-	t_meta *meta;
+	t_meta	*meta;
 
 	meta = malloc(sizeof(t_meta));
 	if (!meta)
@@ -23,20 +23,20 @@ t_meta	*init_meta(int ac, char *av)
 	meta->time_to_die = ft_atoi(av[2]);
 	meta->time_to_eat = ft_atoi(av[3]);
 	meta->time_to_sleep = ft_atoi(av[4]);
-	meta->death = 0;
+	meta->dead = 1;
 	if (ac == 6)
 		meta->max_meal = ft_atoi(av[5]);
 	else
 		meta->max_meal = -1;
-		return (meta);
+	return (meta);
 }
+
 pthread_mutex_t	*init_fork(t_meta *meta)
 {
 	pthread_mutex_t	*forks;
 	int				i;
 
 	i = 0;
-
 	forks = malloc(sizeof (pthread_mutex_t) * meta->philo_n + 1);
 	if (!forks)
 		return (NULL);
@@ -46,32 +46,36 @@ pthread_mutex_t	*init_fork(t_meta *meta)
 			return (NULL);
 		i++;
 	}
-	return	(forks);
+	return (forks);
 }
-t_philo	*philo(t_meta *meta, pthread_mutex_t *forks, int i)
+
+t_philo	*new_philo(t_meta *meta, pthread_mutex_t *forks, int i)
 {
 	t_philo	*philo;
 
 	philo = malloc(sizeof (t_philo));
 	if (!philo)
 		return (NULL);
-	philo->ate = 0;
+	philo->last_meal = 0;
 	philo->eating = 0;
 	philo->id = i + 1;
 	philo->meal = 0;
+	if (pthread_mutex_init(&philo->meal_m, NULL))
+		return (NULL);
 	philo->meta = meta;
 	philo->r_fork = &forks[i];
 	if (i == meta->philo_n -1)
 		philo->l_fork = &forks[0];
 	else
 		philo->l_fork = &forks[i + 1];
+	return (philo);
 }
 
 t_philo	*init_philo(t_meta *meta)
 {
 	t_philo			*philo_start;
 	t_philo			*philo;
-	pthread_mutex_t *forks;
+	pthread_mutex_t	*forks;
 	int				i;
 
 	i = 0;
