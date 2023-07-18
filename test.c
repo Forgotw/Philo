@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 13:58:44 by lsohler           #+#    #+#             */
-/*   Updated: 2023/07/05 16:41:20 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/14 11:20:12 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	main(void)
 	pthread_create(&one->tid, NULL, &routine, one);
 	usleep(400);
 	pthread_create(&two->tid, NULL, &routine, two);
+	printf("TEST TEST TEST TEST\nTEST TEST TEST TEST\nTEST TEST TEST TEST\n");
 	pthread_join(one->tid, NULL);
 	pthread_join(two->tid, NULL);
 	pthread_mutex_destroy(&meta->x);

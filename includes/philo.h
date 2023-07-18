@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:34:52 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/05 14:07:29 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/14 10:51:58 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ typedef struct s_philo
 }				t_philo;
 
 /*ERROR*/
-int		check_arguments(int ac, char **av);
+int			check_arguments(int ac, char **av);
 /*INIT*/
-t_meta	*init_meta(int ac, char **av);
-t_philo	*init_philo(t_meta *meta);
+t_meta		*init_meta(int ac, char **av);
+t_philo		*init_philo(t_meta *meta);
 /*PHILO*/
+/*UTILS*/
+long long	get_time(void);
 #endif

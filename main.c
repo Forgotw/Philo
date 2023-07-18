@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:20 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/05 12:51:11 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/14 10:51:09 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	simulation(t_philo *philo)
 	int	i;
 
 	i = 0;
+	philo->meta->start_time = get_time();
 	while (i < philo->meta->philo_n)
 	{
 		pthread_create(&philo->tid, NULL, &routine, &philo);
