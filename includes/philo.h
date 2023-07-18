@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:34:52 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/14 10:51:58 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/07/18 14:54:19 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define DEAD "died"
+# define EAT "is eating"
+# define FORK "has taken a fork"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+
 typedef struct s_meta
 {
 	int				philo_n;
@@ -27,8 +33,10 @@ typedef struct s_meta
 	int				time_to_eat;
 	int				max_meal;
 	long long		start_time;
-	int				dead;
+	int				stop;
 	pthread_mutex_t	death;
+	pthread_mutex_t	print;
+	pthread_mutex_t	meal_m;
 }				t_meta;
 
 typedef struct s_philo
@@ -38,7 +46,6 @@ typedef struct s_philo
 	long long		last_meal;
 	int				eating;
 	int				meal;
-	pthread_mutex_t	meal_m;
 	int				l_fork;
 	int				r_fork;
 	pthread_mutex_t	*l_fork;
@@ -56,4 +63,5 @@ t_philo		*init_philo(t_meta *meta);
 /*PHILO*/
 /*UTILS*/
 long long	get_time(void);
+int			ft_usleep(useconds_t time);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/05 12:55:34 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:55:45 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ t_meta	*init_meta(int ac, char **av)
 	meta->time_to_die = ft_atoi(av[2]);
 	meta->time_to_eat = ft_atoi(av[3]);
 	meta->time_to_sleep = ft_atoi(av[4]);
-	meta->dead = 1;
+	meta->stop = 0;
+	if (pthread_mutex_init(&meta->meal_m, NULL))
+		return (NULL);
+	if (pthread_mutex_init(&meta->death, NULL))
+		return (NULL);
+	if (pthread_mutex_init(&meta->print, NULL))
+		return (NULL);
 	if (ac == 6)
 		meta->max_meal = ft_atoi(av[5]);
 	else
@@ -60,8 +66,6 @@ t_philo	*new_philo(t_meta *meta, pthread_mutex_t *forks, int i)
 	philo->eating = 0;
 	philo->id = i + 1;
 	philo->meal = 0;
-	if (pthread_mutex_init(&philo->meal_m, NULL))
-		return (NULL);
 	philo->meta = meta;
 	philo->r_fork = &forks[i];
 	if (i == meta->philo_n -1)
