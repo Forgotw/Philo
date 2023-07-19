@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/19 12:25:44 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/19 17:02:36 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ t_meta	*init_meta(int ac, char **av)
 	meta->stop = 0;
 	if (pthread_mutex_init(&meta->meal_m, NULL))
 		return (NULL);
-	if (pthread_mutex_init(&meta->death, NULL))
-		return (NULL);
 	if (pthread_mutex_init(&meta->print, NULL))
 		return (NULL);
 	if (ac == 6)
@@ -43,7 +41,7 @@ pthread_mutex_t	*init_fork(t_meta *meta)
 	int				i;
 
 	i = 0;
-	forks = malloc(sizeof (pthread_mutex_t) * meta->philo_n + 1);
+	forks = malloc(sizeof (pthread_mutex_t) * meta->philo_n);
 	if (!forks)
 		return (NULL);
 	while (i < meta->philo_n)
@@ -62,16 +60,16 @@ t_philo	*new_philo(t_meta *meta, pthread_mutex_t *forks, int i)
 	philo = malloc(sizeof (t_philo));
 	if (!philo)
 		return (NULL);
-	philo->last_meal = 0;
+	philo->last_meal = get_time();
 	philo->eating = 0;
 	philo->id = i + 1;
 	philo->meal = 0;
 	philo->meta = meta;
-	philo->r_fork = &forks[i];
-	if (i == meta->philo_n -1)
-		philo->l_fork = &forks[0];
+	if (i == 0)
+		philo->l_fork = forks[meta->philo_n - 1];
 	else
-		philo->l_fork = &forks[i + 1];
+		philo->l_fork = forks[i - 1];
+	philo->r_fork = forks[i];
 	return (philo);
 }
 
@@ -79,16 +77,15 @@ t_philo	*init_philo(t_meta *meta)
 {
 	t_philo			*philo_start;
 	t_philo			*philo;
-	pthread_mutex_t	*forks;
 	int				i;
 
 	i = 0;
-	forks = init_fork(meta);
-	philo = new_philo(meta, forks, i);
+	meta->forks = init_fork(meta);
+	philo = new_philo(meta, meta->forks, i);
 	philo_start = philo;
-	while (i < meta->philo_n)
+	while (i++ < meta->philo_n)
 	{
-		philo->right = new_philo(meta, forks, i);
+		philo->right = new_philo(meta, meta->forks, i);
 		philo->right->left = philo;
 		philo = philo->right;
 	}
