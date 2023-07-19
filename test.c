@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 13:58:44 by lsohler           #+#    #+#             */
-/*   Updated: 2023/07/14 11:20:12 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/07/19 13:34:09 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct s_philo
 void	*routine(void *arg)
 {
 	t_philo *philo;
+	char	color[8];
 
+	color = "\x1b[1;31m"
 	philo = arg;
 	//printf("test: %s: Tab[0]: %i Tab[1]: %i\n", philo->name, philo->meta->tab[0], philo->meta->tab[1]);
 	while (philo->meta->i <= 10)

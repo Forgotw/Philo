@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:34:52 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/18 14:54:19 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/19 12:46:54 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int			check_arguments(int ac, char **av);
 t_meta		*init_meta(int ac, char **av);
 t_philo		*init_philo(t_meta *meta);
 /*PHILO*/
+void		check_condition(t_philo *philo);
 /*UTILS*/
 long long	get_time(void);
 int			ft_usleep(useconds_t time);
+void		philo_print(t_philo *philo, char *str);
+
 #endif
