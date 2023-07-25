@@ -6,7 +6,7 @@
 #    By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 14:32:22 by lsohler           #+#    #+#              #
-#    Updated: 2023/07/19 17:02:47 by lsohler          ###   ########.fr        #
+#    Updated: 2023/07/25 18:51:37 by lsohler          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ OBJS = $(SRCS:.c=.o)
 # UTILS #
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
-SANITIZE = -fsanitize=address -g3
-SANITIZETHREAD = -fsanitize=thread
+#SANITIZE = -fsanitize=address -g3
+#SANITIZE = -fsanitize=thread -g3
 RM = rm -rf
 
 # COLORS #
@@ -38,11 +38,11 @@ BLUE = \033[0;34m
 
 # COMMANDS #
 %.o: %.c
-				@$(CC) $(FLAGS) -I $(INCLUDES) -c $< -o $@
+				@$(CC) $(FLAGS) $(SANITIZE) -I $(INCLUDES) -c $< -o $@
 
 
 $(NAME): $(OBJS) $(LIBFT_OBJS)
-				@$(CC) $(FLAGS) -I $(INCLUDES) $(OBJS) $(LIBFT_OBJS) -o $(NAME)
+				@$(CC) $(FLAGS) $(SANITIZE) -I $(INCLUDES) $(OBJS) $(LIBFT_OBJS) -o $(NAME)
 				@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 

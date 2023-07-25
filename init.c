@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/19 17:02:36 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/25 19:04:40 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_meta	*init_meta(int ac, char **av)
 	meta->time_to_eat = ft_atoi(av[3]);
 	meta->time_to_sleep = ft_atoi(av[4]);
 	meta->stop = 0;
+	meta->all_ate = 0;
 	if (pthread_mutex_init(&meta->meal_m, NULL))
 		return (NULL);
 	if (pthread_mutex_init(&meta->print, NULL))
@@ -62,14 +63,14 @@ t_philo	*new_philo(t_meta *meta, pthread_mutex_t *forks, int i)
 		return (NULL);
 	philo->last_meal = get_time();
 	philo->eating = 0;
-	philo->id = i + 1;
+	philo->id = i;
 	philo->meal = 0;
 	philo->meta = meta;
-	if (i == 0)
-		philo->l_fork = forks[meta->philo_n - 1];
+	if (i == 1)
+		philo->l_fork = &forks[meta->philo_n - 1];
 	else
-		philo->l_fork = forks[i - 1];
-	philo->r_fork = forks[i];
+		philo->l_fork = &forks[i - 2];
+	philo->r_fork = &forks[i - 1];
 	return (philo);
 }
 
@@ -79,16 +80,15 @@ t_philo	*init_philo(t_meta *meta)
 	t_philo			*philo;
 	int				i;
 
-	i = 0;
+	i = 1;
 	meta->forks = init_fork(meta);
 	philo = new_philo(meta, meta->forks, i);
 	philo_start = philo;
 	while (i++ < meta->philo_n)
 	{
 		philo->right = new_philo(meta, meta->forks, i);
-		philo->right->left = philo;
 		philo = philo->right;
 	}
-	philo_start->left = philo;
+	philo->right = philo_start;
 	return (philo_start);
 }

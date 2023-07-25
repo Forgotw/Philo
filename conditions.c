@@ -6,75 +6,78 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:06:37 by lsohler           #+#    #+#             */
-/*   Updated: 2023/07/19 16:43:24 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/25 19:04:01 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	check_death(t_philo *philo)
+int	check_death_m(t_philo *philo)
 {
-	int		i;
-	t_philo	*tmp;
+	int	ret;
 
-	i = 0;
-	tmp = philo;
-	printf("check death\n");
-	printf("tmp->meta->philo_n: %i\n", tmp->meta->philo_n);
-	while (i < tmp->meta->philo_n)
-	{
-		printf("check death2\n");
-		pthread_mutex_lock(&tmp->meta->meal_m);
-		if (get_time() - tmp->last_meal > tmp->meta->time_to_eat)
-		{
-			printf("check death check if\n");
-			philo_print(tmp, DEAD);
-			tmp->meta->stop = 1;
-			pthread_mutex_unlock(&tmp->meta->meal_m);
-			return ;
-		}
-		printf("check death3\n");
-		pthread_mutex_unlock(&tmp->meta->meal_m);
-		tmp = tmp->right;
-		i++;
-		printf("check death4\n");
-	}
-	printf("check death fini\n");
+	pthread_mutex_lock(&philo->meta->meal_m);
+	if (philo->meta->stop)
+		ret = 1;
+	else
+		ret = 0;
+	pthread_mutex_unlock(&philo->meta->meal_m);
+	return (ret);
 }
 
-void	check_max_meal(t_philo *philo)
+/* Printf pour le dernier repas*/
+/* printf("Philo %i last meal at: %lli\n",
+philo->id, get_sim_time(philo->meta->start_time) -
+(get_time() - philo->last_meal)); */
+void	check_death(t_philo *philo)
 {
-	int		i;
-	t_philo	*tmp;
-
-	i = 0;
-	tmp = philo;
-	printf("check max meal\n");
-	while (i < tmp->meta->philo_n)
+	while (philo)
 	{
-		printf("check max meal 1\n");
-		if (tmp->meal == tmp->meta->max_meal)
-			i++;
-		else
+		pthread_mutex_lock(&philo->meta->meal_m);
+		if (get_time() - philo->last_meal > philo->meta->time_to_die)
+		{
+			philo_print(philo, DEAD);
+			pthread_mutex_lock(&philo->meta->print);
+			philo->meta->stop = 1;
+			pthread_mutex_unlock(&philo->meta->print);
+		}
+		pthread_mutex_unlock(&philo->meta->meal_m);
+		if (philo->meta->stop)
 			break ;
-		tmp = tmp->right;
+		philo = philo->right;
+		if (philo->id == 1)
+			break ;
 	}
-	if (i == tmp->meta->philo_n)
-		tmp->meta->stop = 1;
-	else
-		i = 0;
-	printf("check max meal 2\n");
+}
+
+void	check_max_meal(t_philo *tmp)
+{
+	pthread_mutex_lock(&tmp->meta->meal_m);
+	while (tmp)
+	{
+		if (tmp->meal != tmp->meta->max_meal)
+			break ;
+		else
+		{
+			tmp = tmp->right;
+			if (tmp->id == 1)
+			{
+				tmp->meta->all_ate = 1;
+				break ;
+			}
+		}
+	}
+	pthread_mutex_unlock(&tmp->meta->meal_m);
 }
 
 void	check_condition(t_philo *philo)
 {
-	while (!philo->meta->stop)
+	while (!philo->meta->all_ate)
 	{
-		printf("check conditions\n");
 		check_death(philo);
-		printf("check conditions2222\n");
+		if (philo->meta->stop)
+			break ;
 		if (philo->meta->max_meal != -1 && !philo->meta->stop)
 			check_max_meal(philo);
-		printf("check conditions3333\n");
 	}
 }

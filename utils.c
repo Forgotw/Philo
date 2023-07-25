@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:40:18 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/19 16:37:31 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/07/25 19:07:27 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int		sign;
-	int		result;
-	int		i;
+	int	sign;
+	int	result;
+	int	i;
 
 	result = 0;
 	sign = 1;
@@ -49,13 +49,13 @@ long long	get_time(void)
 int	ft_usleep(long long time)
 {
 	long long	start;
-	
+
 	start = get_time();
 	while ((get_time() - start) < time)
 	{
-		usleep(time / 10);
+		usleep(5);
 	}
-	return(0);
+	return (0);
 }
 
 long long	get_sim_time(long long start_time)
@@ -64,16 +64,22 @@ long long	get_sim_time(long long start_time)
 	long long		sim_time;
 
 	gettimeofday(&current_time, NULL);
-	sim_time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000) - start_time;
+	sim_time = (current_time.tv_sec * 1000)
+		+ (current_time.tv_usec / 1000) - start_time;
 	return (sim_time);
 }
 
+/* Printf pour le nombre de meal printf("
+ \x1b[42m%i%s", philo->meal + 1, COLOR_RESET);*/
 void	philo_print(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->meta->print);
 	if (!philo->meta->stop)
 	{
-		printf("%lli %i %s\n", get_sim_time(philo->meta->start_time), philo->id, str);
+		printf("\x1b[40m%lli%s",
+			get_sim_time(philo->meta->start_time), COLOR_RESET);
+		printf(" \x1b[41m%i%s", philo->id, COLOR_RESET);
+		printf("%s\n", str);
 	}
 	pthread_mutex_unlock(&philo->meta->print);
 }
