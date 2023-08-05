@@ -6,7 +6,7 @@
 #    By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 14:32:22 by lsohler           #+#    #+#              #
-#    Updated: 2023/07/25 18:51:37 by lsohler          ###   ########.fr        #
+#    Updated: 2023/08/05 12:22:52 by lsohler          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS = $(SRCS:.c=.o)
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
 #SANITIZE = -fsanitize=address -g3
-#SANITIZE = -fsanitize=thread -g3
+SANITIZE = -fsanitize=thread -g3
 RM = rm -rf
 
 # COLORS #
