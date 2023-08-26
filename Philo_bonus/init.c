@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/26 19:54:09 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/26 20:04:08 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ t_philo	*new_philo(t_meta *meta, int i)
 	philo->id = i;
 	philo->meal = 0;
 	philo->meta = meta;
+	sem_unlink("/philo_counter");
+	philo->counter = sem_open("/philo_counter", O_CREAT
+			| O_EXCL, 0666, meta->philo_n);
+	if (philo->counter == SEM_FAILED)
+		return (NULL);
 	return (philo);
 }
 
