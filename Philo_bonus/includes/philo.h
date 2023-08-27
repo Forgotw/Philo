@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:34:52 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/26 20:00:12 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 17:54:54 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_philo
 	long long		last_meal;
 	int				eating;
 	int				meal;
-	sem_t			*counter;
 	struct s_philo	*right;
 	struct s_meta	*meta;
 }				t_philo;

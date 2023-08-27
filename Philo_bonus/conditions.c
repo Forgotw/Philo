@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:06:37 by lsohler           #+#    #+#             */
-/*   Updated: 2023/08/26 20:07:14 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 17:49:56 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void	*check_death(void *philovoid)
 			sem_wait(meta->print);
 			exit (1);
 		}
-		sem_post(meta->meal);
 		if (meta->stop)
 			break ;
 		if (meta->max_meal != -1
 			&& philo->meal >= meta->max_meal)
 			break ;
+		sem_post(meta->meal);
 	}
+	sem_post(meta->meal);
 	return (NULL);
 }
 

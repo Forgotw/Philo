@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:28 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/26 20:07:21 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 17:55:33 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,9 @@ void	*routine(void *philosopher)
 	while (!check_death_m(philo))
 	{
 		philo_eat(philo);
-		sem_wait(philo->counter);
 		if (philo->meta->max_meal != -1
 			&& philo->meal >= philo->meta->max_meal)
 			break ;
-		sem_post(philo->counter);
 		philo_after_meal(philo);
 	}
 	pthread_join(philo->tid, NULL);

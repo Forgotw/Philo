@@ -6,19 +6,25 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/26 20:04:08 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 17:59:51 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_semaphore(t_meta *meta)
+int	init_semaphore(t_meta *meta, char **av)
 {
+	int	fork;
+
+	if (av[6])
+		fork = ft_atoi(av[6]);
+	else
+		fork = meta->philo_n;
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_meal");
 	sem_unlink("/philo_print");
 	meta->forks = sem_open("/philo_forks", O_CREAT
-			| O_EXCL, 0666, meta->philo_n);
+			| O_EXCL, 0666, fork);
 	meta->meal = sem_open("/philo_meal", O_CREAT | O_EXCL, 0666, 1);
 	meta->print = sem_open("/philo_print", O_CREAT | O_EXCL, 0666, 1);
 	if (meta->forks == SEM_FAILED
@@ -41,7 +47,7 @@ t_meta	*init_meta(int ac, char **av)
 	meta->time_to_sleep = ft_atoi(av[4]);
 	meta->stop = 0;
 	meta->all_ate = 0;
-	if (init_semaphore(meta))
+	if (init_semaphore(meta, av))
 		return (NULL);
 	if (ac == 6)
 		meta->max_meal = ft_atoi(av[5]);
@@ -62,13 +68,13 @@ t_philo	*new_philo(t_meta *meta, int i)
 	philo->id = i;
 	philo->meal = 0;
 	philo->meta = meta;
-	sem_unlink("/philo_counter");
+	return (philo);
+}
+/*/	sem_unlink("/philo_counter");
 	philo->counter = sem_open("/philo_counter", O_CREAT
 			| O_EXCL, 0666, meta->philo_n);
 	if (philo->counter == SEM_FAILED)
-		return (NULL);
-	return (philo);
-}
+		return (NULL);*/
 
 t_philo	*init_philo(t_meta *meta)
 {

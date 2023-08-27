@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:20 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/26 20:18:26 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 17:47:26 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int ac, char **av)
 	{
 		meta = init_meta(ac, av);
 		philo = init_philo(meta);
-		//print_philo(philo);
 		simulation(philo);
 	}
 }
