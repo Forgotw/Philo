@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:38:58 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/07/25 15:12:34 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/27 19:40:53 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	free_and_join(t_philo *philo)
 	i = 0;
 	while (i < philo->meta->philo_n)
 	{
-		pthread_join(philo->tid, NULL);
+		if (philo->meta->philo_n == 1)
+			pthread_detach(philo->tid);
+		else
+			pthread_join(philo->tid, NULL);
 		pthread_mutex_destroy(&philo->meta->forks[i]);
 		philo = philo->right;
 		i++;
