@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:28 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/28 11:55:22 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/08/29 12:28:48 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	philo_fork(t_philo *philo)
 {
 	sem_wait(philo->meta->forks);
-	philo_print(philo, FORK);
+	philo_print(philo, FORK, 0);
 	sem_wait(philo->meta->forks);
-	philo_print(philo, FORK);
+	philo_print(philo, FORK, 0);
 }
 
 void	philo_eat(t_philo *philo)
 {
 	philo_fork(philo);
 	sem_wait(philo->meta->meal);
-	philo_print(philo, EAT);
+	philo_print(philo, EAT, 0);
 	philo->meal += 1;
 	philo->last_meal = get_time();
 	sem_post(philo->meta->meal);
@@ -35,9 +35,9 @@ void	philo_eat(t_philo *philo)
 
 void	philo_after_meal(t_philo *philo)
 {
-	philo_print(philo, SLEEP);
+	philo_print(philo, SLEEP, 0);
 	ft_usleep(philo->meta->time_to_sleep);
-	philo_print(philo, THINK);
+	philo_print(philo, THINK, 0);
 }
 
 void	*routine(void *philosopher)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conditions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:06:37 by lsohler           #+#    #+#             */
-/*   Updated: 2023/08/28 11:59:41 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/08/29 12:28:45 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*check_death(void *philovoid)
 		sem_wait(meta->meal);
 		if (get_time() - philo->last_meal > meta->time_to_die)
 		{
-			philo_print(philo, DEAD);
+			philo_print(philo, DEAD, 1);
 			meta->stop = 1;
 			sem_wait(meta->print);
 			exit (1);

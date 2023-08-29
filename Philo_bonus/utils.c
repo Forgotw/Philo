@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:40:18 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/28 11:40:04 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/08/29 11:43:11 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ long long	get_sim_time(long long start_time)
 }
 
 /* printf(" \x1b[42m%i%s", philo->meal + 1, COLOR_RESET); */
-void	philo_print(t_philo *philo, char *str)
+void	philo_print(t_philo *philo, char *str, int death)
 {
 	sem_wait(philo->meta->print);
 	if (!philo->meta->stop)
@@ -80,6 +80,8 @@ void	philo_print(t_philo *philo, char *str)
 		printf(" \x1b[41m%i%s", philo->id, COLOR_RESET);
 		printf(" \x1b[42m%i%s", philo->meal + 1, COLOR_RESET);
 		printf("%s\n", str);
+		if (death)
+			exit (0);
 	}
 	sem_post(philo->meta->print);
 }

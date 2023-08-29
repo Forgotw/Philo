@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:34:52 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/27 17:54:54 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/29 11:41:42 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		*check_death(void *philovoid);
 /*UTILS*/
 long long	get_time(void);
 int			ft_usleep(long long time);
-void		philo_print(t_philo *philo, char *str);
+void		philo_print(t_philo *philo, char *str, int death);
 int			ft_atoi(const char *str);
 long long	get_sim_time(long long start_time);
 

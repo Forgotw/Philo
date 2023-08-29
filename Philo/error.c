@@ -6,7 +6,7 @@
 /*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 11:14:31 by lsohler           #+#    #+#             */
-/*   Updated: 2023/08/26 17:43:07 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/29 11:33:29 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_arguments(int ac, char **av)
 
 	i = 0;
 	s = 1;
-	if (ac < 5 || ac > 6)
+	if (ac < 5 || ac > 6 || ft_atoi(av[1]) < 1)
 	{
 		printf("Argument count error\n");
 		return (-1);

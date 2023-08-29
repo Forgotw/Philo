@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
+/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/28 11:27:36 by lsohler@stu      ###   ########.fr       */
+/*   Updated: 2023/08/29 12:29:13 by lsohler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	init_semaphore(t_meta *meta, char **av)
 t_meta	*init_meta(int ac, char **av)
 {
 	t_meta	*meta;
-	(void)ac;
 
+	(void)ac;
 	meta = malloc(sizeof(t_meta));
 	if (!meta)
 		return (NULL);
