@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:45 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/27 17:59:51 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/28 11:27:36 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	init_semaphore(t_meta *meta, char **av)
 {
 	int	fork;
 
-	if (av[6])
+	if (av[5] && av[6])
 		fork = ft_atoi(av[6]);
 	else
 		fork = meta->philo_n;
@@ -37,6 +37,7 @@ int	init_semaphore(t_meta *meta, char **av)
 t_meta	*init_meta(int ac, char **av)
 {
 	t_meta	*meta;
+	(void)ac;
 
 	meta = malloc(sizeof(t_meta));
 	if (!meta)
@@ -49,7 +50,7 @@ t_meta	*init_meta(int ac, char **av)
 	meta->all_ate = 0;
 	if (init_semaphore(meta, av))
 		return (NULL);
-	if (ac == 6)
+	if (av[5])
 		meta->max_meal = ft_atoi(av[5]);
 	else
 		meta->max_meal = -1;

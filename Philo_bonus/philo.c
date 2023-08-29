@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:39:28 by lsohler@stu       #+#    #+#             */
-/*   Updated: 2023/08/27 19:53:24 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/28 11:55:22 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*routine(void *philosopher)
 	philo = (t_philo *)philosopher;
 	pthread_create(&philo->tid, NULL, check_death, philosopher);
 	if (philo->id % 2 == 0)
-		ft_usleep(10);
+		ft_usleep(50);
 	while (!check_death_m(philo))
 	{
 		philo_eat(philo);

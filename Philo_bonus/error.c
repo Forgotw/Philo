@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsohler <lsohler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lsohler@student.42.fr <lsohler>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 11:14:31 by lsohler           #+#    #+#             */
-/*   Updated: 2023/08/27 17:51:58 by lsohler          ###   ########.fr       */
+/*   Updated: 2023/08/28 11:11:52 by lsohler@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ int	check_null_digit(char **av)
 
 int	check_arguments(int ac, char **av)
 {
-	int	i;
-	int	s;
-
-	i = 0;
-	s = 1;
 	if (ac < 5 || ac > 7)
 	{
 		printf("Argument count error\n");
